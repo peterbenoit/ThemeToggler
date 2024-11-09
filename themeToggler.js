@@ -17,11 +17,11 @@
 		 * @param {Object} config - Configuration object to customize themes and button behavior.
 		 */
 		init: function (config) {
-			if (ThemeToggler.initialized) {
-				console.warn('ThemeToggler is already initialized.');
-				return;
-			}
-			ThemeToggler.initialized = true;
+			// if (ThemeToggler.initialized) {
+			// 	console.warn('ThemeToggler is already initialized.');
+			// 	return;
+			// }
+			// ThemeToggler.initialized = true;
 
 			/**
 			 * Default configuration for the ThemeToggler library.
@@ -63,9 +63,15 @@
 			};
 
 			this.config = {
-				lightTheme: { ...defaultConfig.lightTheme, ...(config?.lightTheme || {}) },
+				lightTheme: {
+					...defaultConfig.lightTheme,
+					...(config?.lightTheme || {})
+				},
 				darkTheme: { ...defaultConfig.darkTheme, ...(config?.darkTheme || {}) },
-				themeButton: { ...defaultConfig.themeButton, ...(config?.themeButton || {}) },
+				themeButton: {
+					...defaultConfig.themeButton,
+					...(config?.themeButton || {})
+				},
 				targetId: config?.targetId || defaultConfig.targetId
 			};
 
@@ -226,23 +232,23 @@
                     stroke: var(--moon-color);
                 }
 
-                [data-theme="dark"] .sun-icon {
+                [data-theme="light"] .sun-icon {
                     transform: rotate(var(--icon-rotation));
                     opacity: 0;
                     position: absolute;
                 }
 
-                [data-theme="dark"] .moon-icon {
-                    transform: rotate(0deg);
-                    opacity: 1;
-                }
-
-                [data-theme="light"] .sun-icon {
-                    transform: rotate(0deg);
-                    opacity: 1;
-                }
-
                 [data-theme="light"] .moon-icon {
+                    transform: rotate(0deg);
+                    opacity: 1;
+                }
+
+                [data-theme="dark"] .sun-icon {
+                    transform: rotate(0deg);
+                    opacity: 1;
+                }
+
+                [data-theme="dark"] .moon-icon {
                     transform: rotate(calc(-1 * var(--icon-rotation)));
                     opacity: 0;
                     position: absolute;
