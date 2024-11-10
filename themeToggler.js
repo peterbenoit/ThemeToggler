@@ -146,6 +146,7 @@
 				// Create the toggle button element
 				const button = document.createElement('button');
 				button.className = 'theme-toggle';
+				button.type = 'button';
 				button.setAttribute('onclick', 'ThemeToggler.toggleTheme()');
 				button.setAttribute('aria-label', 'Toggle theme');
 				button.innerHTML = `
