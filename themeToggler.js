@@ -17,22 +17,14 @@
 		 * @param {Object} config - Configuration object to customize themes and button behavior.
 		 */
 		init: function (config) {
-			// if (ThemeToggler.initialized) {
-			// 	console.warn('ThemeToggler is already initialized.');
-			// 	return;
-			// }
-			// ThemeToggler.initialized = true;
-
 			/**
 			 * Default configuration for the ThemeToggler library.
 			 * `targetId` - ID of the element where the toggle button will be placed.
-			 * `useSystemTime` - Boolean to determine if theme should adapt based on system time (day/night).
 			 * `lightTheme` and `darkTheme` - Objects defining CSS variables for light and dark themes.
 			 * `themeButton` - CSS variables to customize the position and size of the toggle button.
 			 */
 			const defaultConfig = {
 				targetId: 'theme-toggle',
-				useSystemTime: true,
 				lightTheme: {
 					'--background-color': '#ffffff',
 					'--text-color': '#333333',
@@ -109,22 +101,8 @@
 				return 'dark';
 			}
 
-			// Check if it's night time and the user wants to use system time
-			if (this.config.useSystemTime && this.isNightTime()) {
-				return 'dark';
-			}
-
 			// Default to light theme
 			return 'light';
-		},
-
-		/**
-		 * Determines if the current time is considered "night".
-		 * @returns {boolean} True if the current time is between 6 PM and 6 AM.
-		 */
-		isNightTime: function () {
-			const hour = new Date().getHours();
-			return hour >= 18 || hour < 6;
 		},
 
 		/**
@@ -163,28 +141,31 @@
 				return;
 			}
 
-			// Create the toggle button element
-			const button = document.createElement('button');
-			button.className = 'theme-toggle';
-			button.setAttribute('onclick', 'ThemeToggler.toggleTheme()');
-			button.setAttribute('aria-label', 'Toggle theme');
-			button.innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <circle cx="12" cy="12" r="5"></circle>
-                    <line x1="12" y1="1" x2="12" y2="3"></line>
-                    <line x1="12" y1="21" x2="12" y2="23"></line>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                    <line x1="1" y1="12" x2="3" y2="12"></line>
-                    <line x1="21" y1="12" x2="23" y2="12"></line>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                </svg>
-            `;
-			target.appendChild(button);
+			const btn = target.querySelector('.theme-toggle');
+			if (!btn) {
+				// Create the toggle button element
+				const button = document.createElement('button');
+				button.className = 'theme-toggle';
+				button.setAttribute('onclick', 'ThemeToggler.toggleTheme()');
+				button.setAttribute('aria-label', 'Toggle theme');
+				button.innerHTML = `
+					<svg xmlns="http://www.w3.org/2000/svg" class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+						<circle cx="12" cy="12" r="5"></circle>
+						<line x1="12" y1="1" x2="12" y2="3"></line>
+						<line x1="12" y1="21" x2="12" y2="23"></line>
+						<line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+						<line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+						<line x1="1" y1="12" x2="3" y2="12"></line>
+						<line x1="21" y1="12" x2="23" y2="12"></line>
+						<line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+						<line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+					</svg>
+					<svg xmlns="http://www.w3.org/2000/svg" class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+						<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+					</svg>
+				`;
+				target.appendChild(button);
+			}
 		},
 
 		/**
