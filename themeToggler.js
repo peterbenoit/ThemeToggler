@@ -120,6 +120,11 @@
 			}
 			document.documentElement.setAttribute('data-theme', theme);
 			localStorage.setItem('theme', theme);
+
+			const event = new CustomEvent('themeChange', {
+				detail: { theme: theme }
+			});
+			window.dispatchEvent(event);
 		},
 
 		/**
