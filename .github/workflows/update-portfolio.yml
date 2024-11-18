@@ -1,0 +1,44 @@
+name: Update Portfolio Site
+
+on:
+  push:
+    branches:
+      - main
+  release:
+    types: [published]
+
+env:
+  PORTFOLIO_REPO: "peterbenoit.github.io"
+  GIT_USER_NAME: "peterbenoit"
+  GIT_USER_EMAIL: "peterbenoit@gmail.com"
+  FILE_TO_UPDATE: "./themeToggler.js"
+  DESTINATION_PATH: "./portfolio/js/themeToggler.js"
+  COMMIT_MESSAGE: "Update themeToggler in portfolio"
+
+jobs:
+  update-portfolio:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Clone Portfolio Repo
+        env:
+          PORTFOLIO_REPO_URL: "https://${{ secrets.PAT_FOR_PORTFOLIO_REPO }}@github.com/peterbenoit/${{ env.PORTFOLIO_REPO }}"
+        run: |
+          git clone $PORTFOLIO_REPO_URL portfolio
+          cd portfolio
+          git config user.name "${{ env.GIT_USER_NAME }}"
+          git config user.email "${{ env.GIT_USER_EMAIL }}"
+
+      - name: Copy Updated Library
+        run: cp ${{ env.FILE_TO_UPDATE }} ${{ env.DESTINATION_PATH }}
+
+      - name: Commit and Push Changes
+        env:
+          PORTFOLIO_REPO_URL: "https://${{ secrets.PAT_FOR_PORTFOLIO_REPO }}@github.com/peterbenoit/${{ env.PORTFOLIO_REPO }}"
+        run: |
+          cd portfolio
+          git add .
+          git commit -m "${{ env.COMMIT_MESSAGE }}"
+          git push $PORTFOLIO_REPO_URL
